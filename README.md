@@ -72,8 +72,8 @@ best_thresh_cv, best_val_cv = optimize_threshold_cv(model, X, y, metric=gmean_sc
 
 Included metrics:
 
--   `gmean_score`: Geometric Mean of sensitivity and specificity\
--   `youden_j_stat`: Youden’s J statistic (sensitivity + specificity - 1)\
+-   `gmean_score`: Geometric Mean of sensitivity and specificity
+-   `youden_j_stat`: Youden’s J statistic (sensitivity + specificity - 1)
 -   `balanced_acc_score`: Balanced Accuracy (wrapper around scikit-learn)
 
 You can also pass any metric function with signature `metric(y_true, y_pred)`.
