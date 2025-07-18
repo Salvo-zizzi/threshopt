@@ -1,7 +1,7 @@
 # threshopt
 
 [![PyPI version](https://img.shields.io/pypi/v/threshopt.svg)](https://pypi.org/project/threshopt/)
-![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Salvo-zizzi/threshopt)
 
 **Threshold Optimization Library for Binary Classification**
