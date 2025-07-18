@@ -9,78 +9,90 @@
   
   <title>Threshopt - Python Threshold Optimization</title>
   
-  <!-- Semplice CSS inline per stile pulito -->
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 700px;
+      max-width: 900px;
       margin: 40px auto;
       padding: 0 20px;
-      color: #333;
-      background-color: #f9f9f9;
+      line-height: 1.6;
+      color: #222;
+      background-color: #fefefe;
     }
-    h1 {
+    h1, h2, h3 {
       color: #2c3e50;
     }
     a {
-      color: #2980b9;
+      color: #0366d6;
       text-decoration: none;
     }
     a:hover {
       text-decoration: underline;
     }
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      font-size: 0.8rem;
-      color: white;
-      background-color: #4caf50;
-      border-radius: 4px;
-      margin-right: 8px;
-      vertical-align: middle;
+    pre {
+      background: #f6f8fa;
+      padding: 12px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+      line-height: 1.4;
     }
-    .badges {
-      margin-bottom: 20px;
+    code {
+      font-family: Consolas, Monaco, monospace;
+      background: #eee;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+    ul {
+      margin-left: 20px;
     }
   </style>
 </head>
 <body>
-  <h1>Threshopt <span class="badge">v0.1.0</span></h1>
 
-  <div class="badges">
-    <a href="https://pypi.org/project/threshopt/">
-      <img src="https://img.shields.io/pypi/v/threshopt" alt="PyPI version" />
-    </a>
-    <a href="https://github.com/Salvo-zizzi/threshopt/actions/workflows/python-package.yml">
-      <img src="https://github.com/Salvo-zizzi/threshopt/actions/workflows/python-package.yml/badge.svg" alt="Build Status" />
-    </a>
-  </div>
+  <h1>Threshopt</h1>
 
-  <p><strong>Threshopt</strong> is a Python library for automatic threshold optimization of binary classifiers.</p>
-  
-  <p>Key features:</p>
+  <p>Automatic threshold optimization for binary classifiers.</p>
+
+  <h2>Features</h2>
   <ul>
     <li>Optimize decision thresholds based on any metric (e.g., accuracy, F1-score, G-Mean, Youden’s J)</li>
-    <li>Supports cross-validation for robust threshold tuning</li>
-    <li>Easy integration with scikit-learn compatible models</li>
+    <li>Supports cross-validation threshold optimization for robust model tuning</li>
+    <li>Easy integration with any scikit-learn compatible model</li>
     <li>Built-in common metrics and ability to use custom metrics</li>
     <li>Visualize confusion matrices and prediction score distributions (optional)</li>
   </ul>
-  
-  <p>Get started:</p>
-  <pre>
-  <code>pip install threshopt
-  </code>
-  </pre>
-  
-  <p>Useful links:</p>
+
+  <h2>Installation</h2>
+  <pre><code>pip install threshopt</code></pre>
+
+  <h2>Quickstart</h2>
+  <pre><code>from threshopt import optimize_threshold, gmean_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+
+X, y = make_classification(n_samples=100, n_features=5, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42)
+
+model = RandomForestClassifier(random_state=42)
+model.fit(X_train, y_train)
+
+best_thresh, best_score = optimize_threshold(model, X_test, y_test, metric=gmean_score)
+print(f"Best threshold: {best_thresh:.2f}, score: {best_score:.4f}")
+</code></pre>
+
+  <h2>License</h2>
+  <p>Apache License 2.0</p>
+
+  <h2>Links</h2>
   <ul>
-    <li><a href="https://pypi.org/project/threshopt/">PyPI project page</a></li>
+    <li><a href="https://pypi.org/project/threshopt/">PyPI Project Page</a></li>
     <li><a href="https://github.com/Salvo-zizzi/threshopt">GitHub Repository</a></li>
-    <li><a href="https://github.com/Salvo-zizzi/threshopt#usage">Usage instructions</a></li>
   </ul>
-  
+
 </body>
 </html>
+
 
 
