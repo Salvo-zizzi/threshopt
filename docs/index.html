@@ -8,11 +8,78 @@
   <meta name="google-site-verification" content="hBz9XjAlc-0AF1id8gCRTuV-v8Pkhzw6JZTQBGSoxCA" />
   
   <title>Threshopt - Python Threshold Optimization</title>
+  
+  <!-- Semplice CSS inline per stile pulito -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 20px;
+      color: #333;
+      background-color: #f9f9f9;
+    }
+    h1 {
+      color: #2c3e50;
+    }
+    a {
+      color: #2980b9;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      font-size: 0.8rem;
+      color: white;
+      background-color: #4caf50;
+      border-radius: 4px;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .badges {
+      margin-bottom: 20px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Threshopt</h1>
-  <p>Official project page.</p>
-  <p><a href="https://pypi.org/project/threshopt/">PyPI project page</a></p>
-  <p><a href="https://github.com/Salvo-zizzi/threshopt">GitHub Repository</a></p>
+  <h1>Threshopt <span class="badge">v0.1.0</span></h1>
+
+  <div class="badges">
+    <a href="https://pypi.org/project/threshopt/">
+      <img src="https://img.shields.io/pypi/v/threshopt" alt="PyPI version" />
+    </a>
+    <a href="https://github.com/Salvo-zizzi/threshopt/actions/workflows/python-package.yml">
+      <img src="https://github.com/Salvo-zizzi/threshopt/actions/workflows/python-package.yml/badge.svg" alt="Build Status" />
+    </a>
+  </div>
+
+  <p><strong>Threshopt</strong> is a Python library for automatic threshold optimization of binary classifiers.</p>
+  
+  <p>Key features:</p>
+  <ul>
+    <li>Optimize decision thresholds based on any metric (e.g., accuracy, F1-score, G-Mean, Youden’s J)</li>
+    <li>Supports cross-validation for robust threshold tuning</li>
+    <li>Easy integration with scikit-learn compatible models</li>
+    <li>Built-in common metrics and ability to use custom metrics</li>
+    <li>Visualize confusion matrices and prediction score distributions (optional)</li>
+  </ul>
+  
+  <p>Get started:</p>
+  <pre>
+  <code>pip install threshopt
+  </code>
+  </pre>
+  
+  <p>Useful links:</p>
+  <ul>
+    <li><a href="https://pypi.org/project/threshopt/">PyPI project page</a></li>
+    <li><a href="https://github.com/Salvo-zizzi/threshopt">GitHub Repository</a></li>
+    <li><a href="https://github.com/Salvo-zizzi/threshopt#usage">Usage instructions</a></li>
+  </ul>
+  
 </body>
 </html>
+
