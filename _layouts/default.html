@@ -3,7 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <title>Threshopt</title>
+  <!-- Stile GitHub per il Markdown -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.2.0/github-markdown-light.min.css">
+  
+  <!-- Evidenziazione sintassi con Highlight.js -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+  
   <style>
     body {
       box-sizing: border-box;
@@ -13,7 +20,6 @@
       padding: 45px;
     }
     pre {
-      background-color: #f6f8fa;
       padding: 10px;
       border-radius: 6px;
       overflow-x: auto;
@@ -24,3 +30,4 @@
   {{ content }}
 </body>
 </html>
+
