@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "threshopt"
-version = "0.1.1"
+version = "1.0.0"
 description = "Automatic threshold optimization for binary classifiers."
 authors = [{name = "Salvatore Zizzi", email = "salvo.zizzi@gmail.com"}]
 license = {text = "Apache-2.0"}
