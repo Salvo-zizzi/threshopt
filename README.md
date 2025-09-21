@@ -1,4 +1,4 @@
-![Logo](images/logo.jpg)
+![Logo](images/logo.png)
 
 [![PyPI version](https://img.shields.io/pypi/v/threshopt?cacheSeconds=1)](https://pypi.org/project/threshopt/)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
