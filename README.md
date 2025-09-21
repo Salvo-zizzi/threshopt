@@ -4,31 +4,34 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Salvo-zizzi/threshopt)
 
-**Threshold Optimization Library for Binary Classification**
+**Threshold Optimization Library for Binary and Multiclass Classification**
 
-`threshopt` is a lightweight Python library designed to help find the optimal decision threshold for binary classifiers, improving model performance by customizing the threshold instead of relying on the default 0.5.
+`threshopt` is a lightweight Python library to find the optimal decision threshold for classifiers, improving performance by customizing thresholds instead of relying on defaults.
 
-------------------------------------------------------------------------
+---
 
 ## Features
 
--   Optimize decision thresholds based on any metric (e.g. accuracy, F1-score, G-Mean, Youden’s J)
--   Supports cross-validation threshold optimization for robust model tuning
--   Easy integration with any scikit-learn compatible model
--   Built-in common metrics and ability to use custom metrics
--   Visualize confusion matrices and prediction score distributions (optional)
+- Optimize decision thresholds based on any metric (e.g., accuracy, F1-score, G-Mean, Youden’s J)
+- Supports cross-validation threshold optimization
+- Works with any scikit-learn compatible model
+- Built-in common metrics and support for custom metrics
+- Optional visualization of confusion matrices and prediction score distributions
+- Multiclass and fallback support
 
-------------------------------------------------------------------------
+---
 
 ## Installation
 
-`bash pip install -e .`
-
-Install in editable mode from the project root directory.
+```bash
+pip install threshopt
+```
 
 ## Quickstart
 
-``` python
+### Binary classification
+
+```python
 from threshopt import optimize_threshold, optimize_threshold_cv, gmean_score
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.datasets import load_breast_cancer
@@ -49,23 +52,31 @@ print(f"Best threshold: {best_thresh:.2f}, F1-score: {best_val:.4f}")
 # Optimize threshold with cross-validation
 best_thresh_cv, best_val_cv = optimize_threshold_cv(model, X, y, metric=gmean_score, cv=5)
 print(f"CV best threshold: {best_thresh_cv:.2f}, CV best metric: {best_val_cv:.4f}")
+```
 
+### Multiclass classification
+
+```python
+from threshopt import optimize_threshold, optimize_threshold_cv, gmean_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.datasets import load_iris
+from sklearn.metrics import f1_score
 
 # Load data
-
-data = load_breast_cancer() X, y = data.data, data.target
+data = load_iris()
+X, y = data.data, data.target
 
 # Train model
+model = RandomForestClassifier(random_state=42)
+model.fit(X, y)
 
-model = RandomForestClassifier(random_state=42) model.fit(X, y)
-
-# Optimize threshold on the test set
-
-best_thresh, best_val = optimize_threshold(model, X, y, metric=f1_score) print(f"Best threshold: {best_thresh:.2f}, F1-score: {best_val:.4f}")
+# Optimize threshold for multiclass using fallback
+best_thresh, best_val = optimize_threshold(model, X, y, metric=f1_score, multiclass=True)
+print(f"Best thresholds per class: {best_thresh}, F1-score: {best_val:.4f}")
 
 # Optimize threshold with cross-validation
-
-best_thresh_cv, best_val_cv = optimize_threshold_cv(model, X, y, metric=gmean_score, cv=5) print(f"CV best threshold: {best_thresh_cv:.2f}, CV best metric: {best_val_cv:.4f}")
+best_thresh_cv, best_val_cv = optimize_threshold_cv(model, X, y, metric=gmean_score, cv=5, multiclass=True)
+print(f"CV best thresholds per class: {best_thresh_cv}, CV best metric: {best_val_cv:.4f}")
 ```
 
 ## Metrics
