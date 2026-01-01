@@ -1,21 +1,39 @@
+# tests/test_optimize_threshold_cv.py
 import pytest
 import numpy as np
-from sklearn.datasets import make_classification
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import f1_score
-from threshopt import optimize_threshold_cv
+from sklearn.metrics import accuracy_score
+from sklearn.dummy import DummyClassifier
+from threshopt.cv import optimize_threshold_cv
 
-def test_optimize_threshold_cv_basic():
-    # Crea un dataset bilanciato semplice
-    X, y = make_classification(n_samples=200, n_features=5, random_state=42)
+def test_basic_functionality():
+    # Dati sintetici
+    X = np.array([[0], [1], [2], [3], [4], [5]])
+    y = np.array([0, 0, 1, 1, 0, 1])
 
-    # Modello semplice
     model = LogisticRegression()
+    mean_thresh, mean_metric = optimize_threshold_cv(model, X, y, accuracy_score, cv=2, random_state=42)
 
-    # Esegui ottimizzazione soglia con CV
-    best_thresh, best_metric = optimize_threshold_cv(model, X, y, metric=f1_score, cv=3)
+    assert isinstance(mean_thresh, float)
+    assert isinstance(mean_metric, float)
+    assert 0 <= mean_thresh <= 1
+    assert 0 <= mean_metric <= 1
 
-    assert 0.0 <= best_thresh <= 1.0, "La soglia deve essere tra 0 e 1"
-    assert 0.0 <= best_metric <= 1.0, "La metrica deve essere tra 0 e 1"
-    assert isinstance(best_thresh, float), "La soglia deve essere float"
-    assert isinstance(best_metric, float), "La metrica deve essere float"
+def test_dummy_model():
+    X = np.random.rand(10, 2)
+    y = np.array([0, 1]*5)
+    model = DummyClassifier(strategy="most_frequent")
+    mean_thresh, mean_metric = optimize_threshold_cv(model, X, y, accuracy_score, cv=2, random_state=42)
+    assert isinstance(mean_thresh, float)
+    assert isinstance(mean_metric, float)
+
+def test_model_without_proba_or_decision_function():
+    class WeirdModel:
+        def fit(self, X, y):
+            return self
+    X = np.array([[0], [1], [2]])
+    y = np.array([0, 1, 0])
+    model = WeirdModel()
+    with pytest.raises(ValueError):
+        optimize_threshold_cv(model, X, y, lambda a,b: 1, cv=2)
+

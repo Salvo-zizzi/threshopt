@@ -1,22 +1,41 @@
-import pytest
 import numpy as np
-from sklearn.datasets import make_classification
+import pytest
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import f1_score
-from threshopt import optimize_threshold
+from sklearn.multiclass import OneVsRestClassifier
+from sklearn.metrics import accuracy_score
+from threshopt.core import optimize_threshold
 
-def test_optimize_threshold_basic():
-    # Crea un dataset bilanciato semplice
-    X, y = make_classification(n_samples=200, n_features=5, random_state=42)
+def test_optimize_threshold_binary():
+    # Dati sintetici
+    X = np.array([[0],[1],[2],[3],[4],[5]])
+    y_true = np.array([0,0,1,1,0,1])
+    model = LogisticRegression().fit(X, y_true)
+    
+    thresholds, best_scores = optimize_threshold(
+        model, X, y_true, accuracy_score,
+        multiclass=False, plot=False, cm=False
+    )
+    
+    assert isinstance(thresholds, float)
+    assert isinstance(best_scores, float)
+    assert 0 <= thresholds <= 1
+    assert best_scores >= 0
 
-    # Modello semplice
-    model = LogisticRegression()
-    model.fit(X, y)
+def test_optimize_threshold_multiclass():
+    # Dati sintetici
+    X = np.array([[0,0],[1,0],[0,1],[1,1],[2,0],[0,2]])
+    y_true = np.array([0,1,2,1,0,2])
+    # LogisticRegression multi-class
+    model = OneVsRestClassifier(LogisticRegression()).fit(X, y_true)
+    
+    thresholds, best_scores = optimize_threshold(
+        model, X, y_true, accuracy_score,
+        multiclass=True, plot=False, cm=False
+    )
+    
+    assert isinstance(thresholds, np.ndarray)
+    assert isinstance(best_scores, np.ndarray)
+    assert thresholds.shape[0] == best_scores.shape[0] == len(np.unique(y_true))
+    assert np.all((0 <= thresholds) & (thresholds <= 1))
+    assert np.all(best_scores >= 0)
 
-    # Ottimizza soglia usando F1
-    best_thresh, best_val = optimize_threshold(model, X, y, metric=f1_score, plot=False, cm=False, report=False)
-
-    assert 0.0 <= best_thresh <= 1.0, "Threshold should be between 0 and 1"
-    assert 0.0 <= best_val <= 1.0, "Metric value should be between 0 and 1"
-    assert isinstance(best_thresh, float), "Threshold should be a float"
-    assert isinstance(best_val, float), "Metric value should be a float"

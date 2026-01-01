@@ -29,6 +29,9 @@ def optimize_threshold_cv(model, X, y_true, metric, cv=5, random_state=None):
 
         # Clone model to avoid leakage
         from sklearn.base import clone
+        if not (hasattr(model, "predict_proba") or hasattr(model, "decision_function")):
+            raise ValueError("Model must implement predict_proba or decision_function")
+
         clf = clone(model)
         clf.fit(X_train, y_train)
 
